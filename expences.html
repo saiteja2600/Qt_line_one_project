@@ -1,0 +1,187 @@
+{% extends 'base/base.html' %}
+
+{% block title %} QTLineone | Expences Types {% endblock %}
+
+{% block breadCrum %}
+
+<div class="hk-pg-header d-flex justify-content-between mb-0">
+    <h4 class="hk-pg-title m-3">Expences</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="">Finance and Accounts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Expences Types</li>
+        </ol>
+    </nav>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+
+<section class="hk-sec-wrapper">
+    <div class="d-flex justify-content-between">
+
+        <div class="">
+            <button type="button" class="btn btn-primary mr-2 mb-3" data-toggle="modal"
+                data-target="#exampleModalCenter">
+                <i class="glyphicon glyphicon-plus"></i> Create Expence Types
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div class="table-wrap">
+                <table class="table table-hover w-100 display pb-30 table-bordered" id="datable_1">
+                    <thead class="bg-dark">
+                        <tr>
+                            <th class="text-white">
+                                S.no
+                            </th>
+                            <th class="text-white">Expence Type</th>
+                            <th class="text-white">Status</th>
+                            <th class="text-white">Action</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        {% for i in expences %}
+                        <tr>
+
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.expences}} </td>
+                            <td class="text-center">
+                                {% if i.status == 'Active' %}
+                                <a href="{% url 'expences_status' i.id %}"
+                                    class="btn btn-success badge text-bg-light rounded-pill">Active</a>
+                                {% else %}
+                                <a href="{% url 'expences_status' i.id %}"
+                                    class="btn btn-danger badge text-bg-light rounded-pill">Deactive</a>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-primary m-1" data-toggle="modal"
+                                    data-target="#exampleModalCenter1{{forloop.counter}}">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-danger m-1" data-toggle="modal"
+                                    data-target="#DeleteCourse{{forloop.counter}}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white">Create Expence</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="expences">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="" class="form-label"><b>Expence Type</b></label>
+                        <input name="expences" type="text" placeholder="Enter Expence Type" class="form-control" />
+                    </div>
+                    <div class="mb-3  d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary m-1">Submit</button>
+                        <button type="reset" class="btn btn-secondary m-1">reset</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--Edit modal-->
+{% for i in expences %}
+<div class="modal fade" id="exampleModalCenter1{{forloop.counter}}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenter1{{forloop.counter}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white">Edit Expence</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'expences_edit' i.id %}" method="post" id="expences">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="" class="form-label"><b>Expence Type</b></label>
+                        <input name="expences_edit" type="text" value="{{i.expences}}" placeholder="Enter Expence Type"
+                            class="form-control" />
+                    </div>
+                    <div class="mb-3  d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary m-1">Submit</button>
+                        <button type="button" class="btn btn-secondary m-1" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<!--Delete modal-->
+{% for i in expences %}
+<div class="modal fade" id="DeleteCourse{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="DeleteCourse"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white">Delete Course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'expences_delete' i.id %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3 text-center">
+                        <div class="d-flex justify-content-center mb-3">
+                            <img src="../../static/triangle-exclamation-solid.svg" width="120" height="70" alt="">
+                        </div>
+                        Are you sure you want to delete {{i.expences}} Course ?
+                    </div>
+                </div>
+                <div class="mb-3 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-danger m-1">Yes</button>
+                    <button type="button" class="btn btn-secondary m-1" data-dismiss="modal" aria-label="Close">
+                        No
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+
+{% endblock %}

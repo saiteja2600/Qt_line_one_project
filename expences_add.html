@@ -1,0 +1,299 @@
+{% extends 'base/base.html' %}
+{% block title %} QTLineone | Expences {% endblock %}
+
+{% block breadCrum %}
+
+<div class="hk-pg-header d-flex justify-content-between mb-0">
+    <h4 class="hk-pg-title m-3">Expences</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="">Finance and Accounts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Expences</li>
+        </ol>
+    </nav>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<!-- message here -->
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == "error" %}
+<div class="h-25 alert alert-danger alert-dismissible fade show mt-2 h-25 text-center" role="alert">{{ message }}</div>
+{% elif message.tags == "success" %}
+<div class="h-25 alert alert-success alert-dismissible fade show mt-2 h-25 text-center" role="alert">{{ message }}</div>
+{% else %}
+<div class="h-25 alert alert-info alert-dismissible fade show mt-2 h-25 text-center" role="alert">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+<h4 class="hk-pg-title mb-3">Company Expences</h4>
+<section class="hk-sec-wrapper">
+
+
+    <div class="row">
+        <div class="col-sm">
+            <div class="table-wrap">
+                <button type="button" class="btn btn-primary mr-2 mb-3" data-toggle="modal"
+                    data-target="#exampleModalCenter">
+                    Add Expences
+                </button>
+                <div class="accordion" id="accordion_1">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between activestate">
+                            <a role="button" data-toggle="collapse" href="#collapse_1" aria-expanded="true">April</a>
+                        </div>
+                        <div id="collapse_1" class="collapse show" data-parent="#accordion_1" role="tabpanel">
+                            <div class="card-body pa-15">
+
+
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</section>
+
+<!--models start here-->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white">Expences</h5>
+
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Category <span
+                                            class="text-danger">*</span></b></label>
+                                <select class="form-control custom-select">
+                                    <option selected>Select </option>
+                                    <option value="Employee">Employee</option>
+                                    <option value="Company">Company</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12  col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Employee ID <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="text" name="Employee_id" class="form-control" id="" value="">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Title <span class="text-danger">*</span></b></label>
+                                <input type="text" name="Title" class="form-control" id="" value="">
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12  col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Employee Name <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="text" name="employee_name" class="form-control" id="" value="">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12  col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Department <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="text" name="department_name" class="form-control" id="" value="">
+                            </div>
+                        </div>
+                        <div class="col-sm-12  col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Designation <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="text" name="designation" class="form-control" id="" value="">
+                            </div>
+                        </div>
+                        <div class="col-sm-12  col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Branch <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="text" name="branch" class="form-control" id="" value="">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Expences Type <span
+                                            class="text-danger">*</span></b></label>
+                                <select name="expences_type" id="" class="form-control custom-select">
+                                    <option selected value="">Select Expence Type</option>
+                                    <option value="Travel">Travel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12  col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Amount <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="text" name="amount" class="form-control" id="" value="">
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Payment Mode <span
+                                            class="text-danger">*</span></b></label>
+                                <select name="payment_mode" id="" class="form-control custom-select">
+                                    <option selected value="">Select Payment Mode</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="upi">UPI</option>
+                                    <option value="Net">Net Banking</option>
+
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 div col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>UPI Type <span class="text-danger">*</span> </b></label>
+                                <select name="upi_type" id="" class="form-control custom-select">
+                                    <option selected value="">Select UPI Type</option>
+                                    <option value="Paytm">Paytm</option>
+                                    <option value="GooglePay">GooglePay</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label"><b>UPI Tranction No</b> </label>
+                                <input type="text" name="upi_tranction_no" class="form-control" id="" value="">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Cheque No <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="text" name="cheque_no" class="form-control" id="" value="">
+                            </div>
+                        </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label"><b>Cheque Date <span
+                                                class="text-danger">*</span></b></label>
+                                    <input type="date" name="cheque_date" class="form-control" id="" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label"><b>Account Name <span class="text-danger">*</span></b></label>
+                                    <input type="text" name="account_name" class="form-control" id="" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label"><b>Account Number <span class="text-danger">*</span></b></label>
+                                    <input type="text" name="account_number" class="form-control" id="" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label"><b>IFSC Code <span class="text-danger">*</span></b></label>
+                                    <input type="text" name="ifsc_code" class="form-control" id="" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label"><b>Bank Name <span class="text-danger">*</span></b></label>
+                                    <input type="text" name="bank_name" class="form-control" id="" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label"><b>Bank Branch Name</b> </label>
+                                    <input type="text" name="bank_branch_name" class="form-control" id="" value="">
+                                </div>
+                            </div>
+                            
+
+                            
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Payment Date <span
+                                            class="text-danger">*</span></b></label>
+                                <input type="date" name="payment_date" class="form-control" id="" value="">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 ">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Payment Recipt <span
+                                            class="text-danger">*</span></b></label>
+                                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Upload</span>
+                                    </div>
+                                    <div class="form-control text-truncate" data-trigger="fileinput"><i
+                                            class="glyphicon glyphicon-file fileinput-exists"></i> <span
+                                            class="fileinput-filename"></span></div>
+                                    <span class="input-group-append">
+                                        <span class=" btn btn-primary btn-file"><span class="fileinput-new">Select
+                                                file</span><span class="fileinput-exists">Change</span>
+                                            <input type="file" name="...">
+                                        </span>
+                                        <a href="#" class="btn btn-secondary fileinput-exists"
+                                            data-dismiss="fileinput">Remove</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label for="" class="form-label"><b>Description</b></label>
+                                <textarea class="form-control" name="address" rows="3"
+                                    placeholder="Enter Address"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary m-1">Submit</button>
+                        <button type="button" class="btn btn-secondary m-1" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--End modal-->
+
+
+{% endblock %}
